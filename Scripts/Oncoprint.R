@@ -6,6 +6,25 @@ install.packages("data.table")
 alt_data <- read.delim(file.choose(),
                        header = TRUE, stringsAsFactors = FALSE)
 
+
+transpose_df <- function(x){
+  if (is.data.frame(x)){
+    r = rownames(x)
+    c = colnames(x)
+    y <- x %>%
+      as.matrix() %>%
+      t() %>% 
+      as.data.frame() %>% 
+      set_rownames(c) %>% 
+      set_colnames(r)
+    return(y)
+  }
+  else {
+    print("Object is not a data frame.")
+  }
+}
+
+
 #save dimnames
 alt_rownames <- alt_data$Sample.ID
 alt_colnames <- colnames(alt_data)[-c(1:4)]
@@ -307,5 +326,9 @@ ht <- oncoPrint(CALR_grouped,
                                             nrow = 1, title_position = "topcenter"))
 draw(ht, heatmap_legend_side = "bottom")
 dev.off()
-?tiff
+
+
+
+
+
          
